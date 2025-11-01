@@ -3,6 +3,10 @@
 **ZTRACK** es una aplicación web completa para registrar, gestionar y visualizar estudiantes y sus notas académicas.  
 El sistema está desarrollado con **React (frontend)**, **Node.js + Express (backend)** y **MongoDB**, todo desplegado mediante **Docker Compose**.
 
+> 🔑 **Credenciales de acceso (modo demostración):**  
+> **Usuario:** `Admin`  
+> **Contraseña:** `abc1234`
+
 ---
 
 ##  Características principales
