@@ -6,6 +6,7 @@ Durante el desarrollo de **ZTRACK**, utilicé herramientas de inteligencia artif
 
 - 🎨 **Diseñar componentes de interfaz** en **React** con **TailwindCSS**, tomando inspiración de ejemplos sugeridos por la IA.
 - 🧰 **Redactar documentación técnica**, incluyendo este archivo y el README principal.
+- 🏗️ **Mejora en la validación de fetch:** se corrigió el manejo de las respuestas de `fetch` para evitar que los estados quedaran vacíos al pasar datos incompletos como props.
 
 ---
 
