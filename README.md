@@ -1,12 +1,5 @@
 #  ZTRACK — Sistema de Gestión de Estudiantes y Notas
 
-![GitHub repo size](https://img.shields.io/github/repo-size/tuusuario/ztrack?color=blue)
-![GitHub last commit](https://img.shields.io/github/last-commit/tuusuario/ztrack?color=brightgreen)
-![GitHub license](https://img.shields.io/github/license/tuusuario/ztrack?color=orange)
-![Node.js](https://img.shields.io/badge/Node.js-22.x-green)
-![React](https://img.shields.io/badge/React-18-blue)
-![MongoDB](https://img.shields.io/badge/MongoDB-6.x-success)
-
 **ZTRACK** es una aplicación web completa para registrar, gestionar y visualizar estudiantes y sus notas académicas.  
 El sistema está desarrollado con **React (frontend)**, **Node.js + Express (backend)** y **MongoDB**, todo desplegado mediante **Docker Compose**.
 
