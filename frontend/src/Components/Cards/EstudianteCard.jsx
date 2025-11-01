@@ -1,4 +1,4 @@
-import { Pencil, Trash } from "lucide-react"
+import { Copy, Pencil, Trash } from "lucide-react"
 import Button from "../Global/Button"
 import { useState } from "react"
 import ModificarAlumnoForm from "../Forms/ModificarAlumnoForm"
@@ -12,6 +12,11 @@ const EstudianteCard = ({ students, fetchStudents }) => {
 
   const handleIsNotShow = () => {
     setIsShow(false)
+  }
+
+  const handleClickCopy = (text) => {
+    navigator.clipboard.writeText(text)
+    alert('Copiado!')
   }
 
   const token = localStorage.getItem('Token')
@@ -48,7 +53,13 @@ const EstudianteCard = ({ students, fetchStudents }) => {
   return (
     <div className="p-4 border border-[#18294A] rounded bg-[#f8f8f8f8]">
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold">{students.name} {students.lastname}</h2>
+        <div className="pb-2">
+          <h2 className="font-semibold">{students.name} {students.lastname}</h2>
+          <div className="flex gap-2 items-center cursor-pointer" onClick={() => handleClickCopy(students.id)}>
+            <span className="text-gray-500 text-xs">ID: {students.id}</span>
+            <Copy size={14} color="#6a7282"/>
+          </div>
+        </div>
         <div className="flex gap-2">
           <Button
             className={'border-[#2274a5] bg-[#2274a581]'}

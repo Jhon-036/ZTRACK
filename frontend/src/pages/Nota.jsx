@@ -51,7 +51,7 @@ const Nota = () => {
           <section>
             <h2 className="text-2xl uppercase pb-6">Panel de notas</h2>
             <div>
-              <RegistrarNotaForm />
+              <RegistrarNotaForm fetchExamsWithStudent={fetchExamsWithStudent}/>
             </div>
           </section>
           <section className="col-span-3">

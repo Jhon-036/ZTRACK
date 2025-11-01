@@ -1,11 +1,11 @@
 import Menu from "../Components/Global/Menu"
-import RechartsAlumno from "../Components/Recharts/RechartsAlumno"
+import Welcome from "../Components/Home/Welcome"
 
 const Panel = () => {
   return (
     <article>
       <Menu />
-      <RechartsAlumno />
+      <Welcome />
     </article>
   )
 }

@@ -1,9 +1,7 @@
 import { useState } from "react"
 
-const RegistrarNotaForm = () => {
+const RegistrarNotaForm = ({ fetchExamsWithStudent }) => {
   const [students, setStudents] = useState([])
-  const [searchStudent, setSearchStudent] = useState('')
-  const [showStudentData, setShowStudentData] = useState([])
   const [dataExam, setDataExam] = useState({
     clas: '',
     note: '',
@@ -15,19 +13,16 @@ const RegistrarNotaForm = () => {
       ...dataExam,
       [e.target.id]: e.target.value
     })
-
-    if (e.target.id === 'studentId') {
-      setSearchStudent(e.target.value)
-    }
   }
 
   const token = localStorage.getItem('Token')
 
-  const fetchStudents = async () => {
+  const fetchExam = async () => {
     try {
-      const response = await fetch('http://localhost:3000/v1/api/students', {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${token}` }
+      const response = await fetch('http://localhost:3000/v1/api/exams', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(dataExam)
       })
 
       if (!response.ok) {
@@ -36,6 +31,8 @@ const RegistrarNotaForm = () => {
 
       const data = await response.json()
       setStudents(data.estudiantes)
+
+      alert(data.mensaje)
 
     } catch (err) {
       console.log(err);
@@ -46,9 +43,11 @@ const RegistrarNotaForm = () => {
 
   const dataForm = async (e) => {
     e.preventDefault()
-    await fetchStudents()
+    await fetchExam()
 
-    // console.log(dataExam);
+    if (fetchExamsWithStudent) {
+      fetchExamsWithStudent()
+    }
   }
   
   if (!token) {
@@ -79,7 +78,7 @@ const RegistrarNotaForm = () => {
             </select>
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="studentId">Alumno :</label>
+            <label htmlFor="studentId">Id de Alumno :</label>
             <input
               placeholder="Nombre y apellido"
               type="text"
@@ -104,14 +103,6 @@ const RegistrarNotaForm = () => {
             <input type="submit" value={'Registrar'} className="cursor-pointer border border-[#2274a5] bg-[#2274a581] text-[#2274a5] font-semibold self-center px-8 py-3 rounded" />
           </div>
         </form>
-
-        <div>
-          {
-            students.map((student) => (
-              <div key={student.id}>{student.name}s</div>
-            ))
-          }
-        </div>
     </section>
   )
 }

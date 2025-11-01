@@ -61,7 +61,7 @@ const RegistrarAlumnoForm = ({ className, handleIsNotShow, fetchStudents }) => {
   }
 
   return (
-    <section className={`${className} absolute top-0 left-0 w-full h-screen bg-[#00000041] backdrop-blur-[2px] flex items-center justify-center`}>
+    <section className={`${className} sticky top-0 left-0 w-full h-screen bg-[#00000041] backdrop-blur-[2px] flex items-center justify-center`}>
       <div className="w-130 border border-[#18294A] p-12 rounded shadow bg-white relative">
         <h2 className="text-center text-2xl uppercase pb-6">Registrar Alumno</h2>
         <div

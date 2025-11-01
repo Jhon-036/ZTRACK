@@ -28,6 +28,10 @@ const RegisterForm = () => {
       return alert('Las contraseñas no coinciden')
     }
 
+    if (dataRegister.password1.length <= 6) {
+      return alert('La contraseña debe de tener al menos 7 caracteres')
+    }
+
     try {
       const userData = {
         username: dataRegister.username,
