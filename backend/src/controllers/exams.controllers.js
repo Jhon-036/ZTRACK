@@ -1,4 +1,3 @@
-import { isValidObjectId } from "mongoose"
 import Exams from "../schemas/exams.schema.js"
 
 export const CreateExam = async (req, res) => {
@@ -55,7 +54,7 @@ export const ListExamByStudent = async (req, res) => {
 
     const countExamByStudent = examsByStudent.length
 
-    res.status(200).json({cantidad: countExamByStudent, exameness: examsByStudent})
+    res.status(200).json({cantidad: countExamByStudent, examenes: examsByStudent})
   } catch (err) {
     res.status(400).json({ error: err.message })
   }

@@ -1,7 +1,9 @@
 import { useState } from "react"
 
 const RegistrarNotaForm = () => {
+  const [students, setStudents] = useState([])
   const [searchStudent, setSearchStudent] = useState('')
+  const [showStudentData, setShowStudentData] = useState([])
   const [dataExam, setDataExam] = useState({
     clas: '',
     note: '',
@@ -13,43 +15,47 @@ const RegistrarNotaForm = () => {
       ...dataExam,
       [e.target.id]: e.target.value
     })
+
+    if (e.target.id === 'studentId') {
+      setSearchStudent(e.target.value)
+    }
   }
 
   const token = localStorage.getItem('Token')
 
-  const fetchExamsWithStudent = async () => {
+  const fetchStudents = async () => {
     try {
-      const response = await fetch('http://localhost:3000/v1/api/exams', {
+      const response = await fetch('http://localhost:3000/v1/api/students', {
         method: 'GET',
-        headers: {'Authorization': `Bearer ${token}`},
-
+        headers: { 'Authorization': `Bearer ${token}` }
       })
 
-      const data = response.json()
       if (!response.ok) {
-        alert(data.error || data.mensaje)
-        localStorage.removeItem('Token')
-        return
+        return alert(data.error || data.mensaje)
       }
-      
+
+      const data = await response.json()
+      setStudents(data.estudiantes)
+
     } catch (err) {
-      console.log(err)
+      console.log(err);
       alert(err.message)
     }
   }
+  
 
   const dataForm = async (e) => {
     e.preventDefault()
+    await fetchStudents()
 
-    
-
-    console.log(dataExam);
+    // console.log(dataExam);
   }
-
+  
   if (!token) {
     window.location.href = '/'
   }
-
+  
+  console.log(students);
   return (
     <section className="border border-[#18294A] rounded p-6 bg-[#f8f8f8f8]">
       <h2 className="text-center uppercase pb-6 border-b">Registrar Examen</h2>
@@ -76,7 +82,7 @@ const RegistrarNotaForm = () => {
             <label htmlFor="studentId">Alumno :</label>
             <input
               placeholder="Nombre y apellido"
-              type="number"
+              type="text"
               value={dataExam.studentId}
               onChange={changeDataExam}
               id="studentId"
@@ -98,6 +104,14 @@ const RegistrarNotaForm = () => {
             <input type="submit" value={'Registrar'} className="cursor-pointer border border-[#2274a5] bg-[#2274a581] text-[#2274a5] font-semibold self-center px-8 py-3 rounded" />
           </div>
         </form>
+
+        <div>
+          {
+            students.map((student) => (
+              <div key={student.id}>{student.name}s</div>
+            ))
+          }
+        </div>
     </section>
   )
 }
