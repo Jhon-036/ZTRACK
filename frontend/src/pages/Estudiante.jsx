@@ -13,14 +13,26 @@ const Estudiante = () => {
   const [countStudents, setCountStudents] = useState(0)
   const [countShowStudents, setCountShowStudents] = useState(15)
 
+  const token = localStorage.getItem('Token')
   const fetchStudents = async () => {
+
     try {
       const response = await fetch('http://localhost:3000/v1/api/students', {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       })
       const data = await response.json()
       setStudents(data.estudiantes)
       setCountStudents(data.cantidad)
+
+      if (!response.ok) {
+        alert(data.error || data.mensaje)
+        localStorage.removeItem('Token')
+        return
+      }
+
     } catch (err) {
       console.log(err)
     } finally {
@@ -32,6 +44,10 @@ const Estudiante = () => {
   useEffect(() => {
     fetchStudents()
   }, [])
+
+  if (!token) {
+    window.location.href = '/'
+  }
 
   const handleIsShow = () => {
     setIsShow(true)
@@ -74,7 +90,7 @@ const Estudiante = () => {
                 <section className="grid grid-cols-3 gap-2">
                   {
                     students.slice(0, countShowStudents).map((student) => (
-                      <EstudianteCard key={student.id} students={student} />
+                      <EstudianteCard key={student.id} students={student} fetchStudents={fetchStudents} />
                     ))
                   }
                 </section>

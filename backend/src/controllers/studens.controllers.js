@@ -71,9 +71,9 @@ export const DeleteStudents = async (req, res) => {
       return res.status(404).json({ mensaje: 'No se encontraro el ID' })
     }
 
-    const studentDelete = await Studens.findByIdAndDelete(id)
+    await Studens.findByIdAndDelete(id)
     
-    res.status(200).json({mensaje: 'Alumno eliminado exitosamente', alumno: studentDelete})
+    res.status(200).json({mensaje: 'Alumno eliminado exitosamente'})
   } catch (err) {
     res.status(400).json({ error: err.message })
   }

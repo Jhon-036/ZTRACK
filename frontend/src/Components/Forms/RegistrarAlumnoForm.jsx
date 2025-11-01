@@ -16,6 +16,7 @@ const RegistrarAlumnoForm = ({ className, handleIsNotShow, fetchStudents }) => {
     })
   }
 
+  const token = localStorage.getItem('Token')
 
   const dataForm = async (e) => {
     e.preventDefault()
@@ -24,14 +25,14 @@ const RegistrarAlumnoForm = ({ className, handleIsNotShow, fetchStudents }) => {
       return alert('Complete todos los campos')
     }
 
-    if(dataStudent.age <= 12) {
+    if (dataStudent.age <= 12) {
       return alert('La edad debe ser mayor de 12 años')
     }
 
     try {
       const response = await fetch('http://localhost:3000/v1/api/students', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(dataStudent)
       })
 
@@ -55,11 +56,15 @@ const RegistrarAlumnoForm = ({ className, handleIsNotShow, fetchStudents }) => {
 
   }
 
+  if (!token) {
+    window.location.href = '/'
+  }
+
   return (
     <section className={`${className} absolute top-0 left-0 w-full h-screen bg-[#00000041] backdrop-blur-[2px] flex items-center justify-center`}>
       <div className="w-130 border border-[#18294A] p-12 rounded shadow bg-white relative">
         <h2 className="text-center text-2xl uppercase pb-6">Registrar Alumno</h2>
-        <div 
+        <div
           className="absolute top-5 right-5 p-1 cursor-pointer"
           onClick={handleIsNotShow}
         >

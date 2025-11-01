@@ -1,23 +1,26 @@
 import { X } from "lucide-react"
 import { useEffect, useState } from "react"
 
-const ModificarAlumnoForm = ({ className, handleIsNotShow, student }) => {
+const ModificarAlumnoForm = ({ className, handleIsNotShow, student, fetchStudents }) => {
   const [dataStudent, setDataStudent] = useState({
     name: '',
     lastname: '',
     age: '',
     gender: ''
   })
-
+  
   const changeDataStudent = (e) => {
     setDataStudent({
       ...dataStudent,
       [e.target.id]: e.target.value
     })
   }
+  
+  const token = localStorage.getItem('Token')
 
   const dataForm = async (e) => {
     e.preventDefault()
+
 
     if (!dataStudent.name && !dataStudent.lastname && !dataStudent.age && !dataStudent.gender) {
       return alert('No puede dejar todos los campos vacios')
@@ -33,7 +36,7 @@ const ModificarAlumnoForm = ({ className, handleIsNotShow, student }) => {
     try {
       const response = await fetch(`http://localhost:3000/v1/api/students/${student.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(dataUpdate)
       })
 
@@ -42,19 +45,28 @@ const ModificarAlumnoForm = ({ className, handleIsNotShow, student }) => {
       if (!response.ok) {
         return alert(data.error)
       }
+
+      alert('Alumno actualizado correctamente')
+      if (fetchStudents) {
+        fetchStudents()
+      }
+
     } catch (err) {
       console.log('Error: ', err)
       return alert(err.message)
     }
 
-    alert('Alumno actualizado correctamente')
+  }
+
+  if (!token) {
+    window.location.href = '/'
   }
 
   return (
     <section className={`${className} absolute top-0 left-0 w-full h-screen bg-[#00000041] backdrop-blur-[2px] flex items-center justify-center`}>
       <div className="w-130 border border-[#18294A] p-12 rounded shadow bg-white relative">
         <h2 className="text-center text-[#18294A] font-semibold text-2xl uppercase pb-6">Modificar Alumno</h2>
-          <p className="pb-4 text-[#18294A] font-semibold">Alumno Seleccionado:</p>
+        <p className="pb-4 text-[#18294A] font-semibold">Alumno Seleccionado:</p>
         <div className="border border-[#18294A] rounded p-4 mb-4">
           <div>
             <p>Nombre: {student.name}</p>

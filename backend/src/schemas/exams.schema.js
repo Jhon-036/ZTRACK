@@ -1,32 +1,25 @@
 import mongoose from "mongoose";
 
 const examSchema = new mongoose.Schema({
-  name: {
+  clas: {
     type: String,
+    enum: ['Cálculo I', 'Cálculo II', 'Álgebra Lineal', 'Física General', 'Ingles I', 'Ingles II'],
     required: true
   },
-  lastname: {
-    type: String,
-    required: true
-  },
-  age: {
+  note: {
     type: Number,
     required: true
   },
-  gender: {
-    trype: String,
-    required: true
-  },
-  studenId: {
+  studentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Studen',
+    ref: 'Student',
     required: true
   }
 }, {
   timestamps: true
 })
 
-userSchema.set('toJSON', {
+examSchema.set('toJSON', {
   transform: (doc, ret) => {
     ret.id = ret._id.toString()
     delete ret._id
